@@ -9,12 +9,14 @@
 #include "Enemy.h"
 #include "Framework/Scene.h"
 #include "Renderer/ParticleSystem.h"
+#include "Renderer/Texture.h"
 
 #include "SpaceGame.h"
 
 #include <iostream>
 #include <vector>
 #include <thread>
+//#include <cassert> // ASSERT
 
 using namespace std;
 
@@ -49,6 +51,13 @@ public:
 
 int main(int argc, char* argv[])
 {
+	//int j = 0;
+	//ASSERT_LOG(j != 0, "value is " << j << " is invalid");
+
+	//int* j = nullptr;
+	//ASSERT_LOG(j != 0, "painter is null ");
+
+	INFO_LOG("hello world");
 
 	kiko::MemoryTracker::Initialize();
 	kiko::seed_random((unsigned int)time(nullptr));
@@ -83,6 +92,9 @@ int main(int argc, char* argv[])
 	float speed = 350;
 	constexpr float turnRate = kiko::DegreesToRadians(180.0f); //? //cast to fix
 
+	// create texture
+	shared_ptr<kiko::Texture> texture = make_shared<kiko::Texture>();
+	texture->Create(kiko::g_renderer, "megaman.png");
 
 
 
@@ -131,10 +143,14 @@ int main(int argc, char* argv[])
 
 			star.Draw(kiko::g_renderer);
 		}
+
+		kiko::g_renderer.DrawTexture(texture.get(), 0, 0, 0.0f);
 		
 		game->Draw(kiko::g_renderer);
 		kiko::g_particleSystem.Draw(kiko::g_renderer);
 		//text->Draw(kiko::g_renderer, 400, 300);
+
+		
 		
 		kiko::g_renderer.EndFrame();
 

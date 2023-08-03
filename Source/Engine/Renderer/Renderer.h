@@ -7,7 +7,6 @@ namespace kiko
 	//void CreateWindow(const std::string& title, int width, int height);
 
 
-
 	class Renderer
 	{
 	public:
@@ -27,10 +26,13 @@ namespace kiko
 		void DrawPoint(int x, int y);
 		void DrawPoint(float x, float y);
 
+		void DrawTexture(class Texture* texture, float x, float y, float angle = 0.0f);
+
 		int GetWidth() { return m_width; }
 		int GetHeight() { return m_height; }
 
 		friend class Text;
+		friend class Texture;
 
 	private:
 		int m_width = 0;
