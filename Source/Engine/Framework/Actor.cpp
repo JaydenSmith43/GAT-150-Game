@@ -1,4 +1,5 @@
 #include "Actor.h"
+#include "Components/RenderComponent.h"
 
 void kiko::Actor::Update(float dt)
 {
@@ -9,11 +10,27 @@ void kiko::Actor::Update(float dt)
 
 	}
 
-	m_transform.position += m_velocity * dt;
-	m_velocity *= std::pow(1.0f - m_damping, dt);
+	for (auto& component : m_components)
+	{
+		component->Update(dt);
+	}
 }
 
 void kiko::Actor::Draw(kiko::Renderer& renderer)
 {
-	m_model->Draw(renderer, m_transform);
+	//m_model->Draw(renderer, m_transform);
+	for (auto& component : m_components)
+	{
+		RenderComponent* renderComponent = dynamic_cast<RenderComponent*>(component.get());
+		if (renderComponent)
+		{
+			renderComponent->Draw(renderer);
+		}
+	}
+}
+
+void kiko::Actor::AddComponent(std::unique_ptr<Component> component)
+{
+	component->m_owner = this;
+	m_components.push_back(std::move(component));
 }

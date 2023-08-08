@@ -4,6 +4,10 @@
 #include "Input/InputSystem.h"
 #include "Framework/Scene.h"
 #include "Framework/Emitter.h"
+#include "Framework/Components/SpriteComponent.h"
+#include "Framework/Resource/ResourceManager.h"
+#include "Framework/Components/EnginePhysicsComponent.h"
+#include "Renderer/Texture.h"
 //renderer? 
 
 void Player::Update(float dt)
@@ -20,7 +24,9 @@ void Player::Update(float dt)
 	if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_W)) thrust = 1;
 
 	kiko::vec2 forward = kiko::vec2{ 0, -1 }.Rotate(m_transform.rotation);
-	AddForce(forward * m_speed * thrust);
+
+	auto physicsComponent = GetComponent<kiko::PhysicsComponent>();
+	physicsComponent->ApplyForce(forward * m_speed * thrust);
 
 	//m_transform.position += forward * m_speed * thrust * kiko::g_time.GetDeltaTime();
 	m_transform.position.x = kiko::Wrap(m_transform.position.x, (float)kiko::g_renderer.GetWidth());
@@ -31,13 +37,23 @@ void Player::Update(float dt)
 	{
 		//create weapon
 		kiko::Transform transform1{ m_transform.position, m_transform.rotation + kiko::DegreesToRadians(10.0f), 1.0f };
-		std::unique_ptr<Weapon> weapon = std::make_unique<Weapon>(600.0f, transform1, m_model);
+		std::unique_ptr<Weapon> weapon = std::make_unique<Weapon>(600.0f, transform1); //dont add model, we sepcify it with the component system
 		weapon->m_tag = "Player";
+
+		std::unique_ptr<kiko::SpriteComponent> component = std::make_unique<kiko::SpriteComponent>();
+		component->m_texture = kiko::g_resources.Get<kiko::Texture>("rocket.png", kiko::g_renderer);
+		weapon->AddComponent(std::move(component));
+
 		m_scene->Add(std::move(weapon)); //moving ownership to parameter we are passing
 
 		kiko::Transform transform2{ m_transform.position, m_transform.rotation - kiko::DegreesToRadians(10.0f), 1.0f };
-		weapon = std::make_unique<Weapon>(600.0f, transform2, m_model);
+		weapon = std::make_unique<Weapon>(600.0f, transform2);
 		weapon->m_tag = "Player";
+
+		component = std::make_unique<kiko::SpriteComponent>();
+		component->m_texture = kiko::g_resources.Get<kiko::Texture>("rocket.png", kiko::g_renderer);
+		weapon->AddComponent(std::move(component));
+
 		m_scene->Add(std::move(weapon)); 
 	}
 

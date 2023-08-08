@@ -5,8 +5,8 @@
 class Boss : public kiko::Actor
 {
 public:
-	Boss(float speed, float turnRate, const kiko::Transform& transform, std::shared_ptr<kiko::Model> model) :
-		Actor{ transform, model },
+	Boss(float speed, float turnRate, const kiko::Transform& transform) :
+		Actor{ transform },
 		m_speed{ speed },
 		m_turnRate{ turnRate }
 	{

@@ -27,7 +27,7 @@ void Enemy::Update(float dt)
 			if (m_fireTimer <= 0.0f)
 			{
 				kiko::Transform transform{ m_transform.position, m_transform.rotation, 0.5f };
-				std::unique_ptr<Weapon> weapon = std::make_unique<Weapon>(400.0f, transform, m_model);
+				std::unique_ptr<Weapon> weapon = std::make_unique<Weapon>(400.0f, transform); //model
 				weapon->m_tag = "Enemy";
 				m_scene->Add(std::move(weapon));
 

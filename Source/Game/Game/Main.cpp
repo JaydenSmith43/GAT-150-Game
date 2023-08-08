@@ -3,24 +3,26 @@
 #include "Renderer/ModelManager.h"
 #include "Renderer/Font.h"
 #include "Renderer/Text.h"
+#include "Renderer/ParticleSystem.h"
+#include "Renderer/Texture.h"
+
 #include "Input/InputSystem.h"
 #include "Audio/AudioSystem.h"
 #include "Player.h"
 #include "Enemy.h"
+
 #include "Framework/Scene.h"
-#include "Renderer/ParticleSystem.h"
-#include "Renderer/Texture.h"
+#include "Framework/Resource/ResourceManager.h"
 
 #include "SpaceGame.h"
 
 #include <iostream>
 #include <vector>
 #include <thread>
+#include <array>
 //#include <cassert> // ASSERT
 
 using namespace std;
-
-using namespace kiko;
 
 class Star
 {
@@ -32,7 +34,7 @@ public:
 
 	void Update(int width, int height)
 	{
-		m_pos += m_vel * g_time.GetDeltaTime();
+		m_pos += m_vel * kiko::g_time.GetDeltaTime();
 		if (m_pos.x >= width) m_pos.x = 0;
 		if (m_pos.y >= height) m_pos.y = 0;
 	}
@@ -48,14 +50,33 @@ public:
 
 };
 
+//template <typename T>
+//void print(const std::string& s, const T& container)
+//{
+//	std::cout << s << std::endl;
+//		for (auto element : container)
+//		{
+//			std::cout << element << " ";
+//		}
+//	std::cout << std::endl;
+//}
+
+//void print_arg(int count, ...)
+//{
+//	va_list args;
+//
+//	va_start(args, count);
+//	for (int i = 0; i < count; ++i)
+//	{
+//		std::cout << va_arg(args, const char*) << std::endl;
+//	}
+//
+//	va_end(args);
+//}
 
 int main(int argc, char* argv[])
 {
-	//int j = 0;
-	//ASSERT_LOG(j != 0, "value is " << j << " is invalid");
-
-	//int* j = nullptr;
-	//ASSERT_LOG(j != 0, "painter is null ");
+	//print_arg(4, "hello", "world", "goodbye", "yo!");
 
 	INFO_LOG("hello world");
 
@@ -79,8 +100,8 @@ int main(int argc, char* argv[])
 
 	vector<Star> stars;
 	for (int i = 0; i < 100; i++) {
-		kiko::Vector2 pos(Vector2(kiko::random(kiko::g_renderer.GetWidth()), kiko::random(kiko::g_renderer.GetHeight())));
-		kiko::Vector2 vel(randomf(100, 1000), 0.0f);
+		kiko::Vector2 pos(kiko::Vector2(kiko::random(kiko::g_renderer.GetWidth()), kiko::random(kiko::g_renderer.GetHeight())));
+		kiko::Vector2 vel(kiko::randomf(100, 1000), 0.0f);
 
 		stars.push_back(Star(pos, vel));
 	}
@@ -93,8 +114,10 @@ int main(int argc, char* argv[])
 	constexpr float turnRate = kiko::DegreesToRadians(180.0f); //? //cast to fix
 
 	// create texture
-	shared_ptr<kiko::Texture> texture = make_shared<kiko::Texture>();
-	texture->Create(kiko::g_renderer, "megaman.png");
+	
+	//kiko::res_t<kiko::Texture> texture = kiko::g_resources.Get<kiko::Texture>("megaman.png", kiko::g_renderer);
+	//shared_ptr<kiko::Texture> texture = make_shared<kiko::Texture>();
+	//texture->Load("megaman.png", kiko::g_renderer);
 
 
 
@@ -116,10 +139,10 @@ int main(int argc, char* argv[])
 
 		if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_SPACE) && (!kiko::g_inputSystem.GetPreviousKeyDown(SDL_SCANCODE_SPACE)))
 		{
-			g_audioSystem.PlayOneShot("laser", false);
+			kiko::g_audioSystem.PlayOneShot("laser", false);
 		}
 
-		g_audioSystem.Update();
+		kiko::g_audioSystem.Update();
 
 
 		//update game
@@ -143,10 +166,11 @@ int main(int argc, char* argv[])
 
 			star.Draw(kiko::g_renderer);
 		}
-
-		kiko::g_renderer.DrawTexture(texture.get(), 0, 0, 0.0f);
 		
 		game->Draw(kiko::g_renderer);
+
+		//kiko::g_renderer.DrawTexture(texture.get(), 0.0f, 0.0f, 0.0f);
+
 		kiko::g_particleSystem.Draw(kiko::g_renderer);
 		//text->Draw(kiko::g_renderer, 400, 300);
 

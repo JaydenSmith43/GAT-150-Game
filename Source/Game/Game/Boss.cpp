@@ -29,7 +29,7 @@ void Boss::Update(float dt)
 			if (m_fireTimer <= 0.0f)
 			{
 				kiko::Transform transform{ m_transform.position, m_transform.rotation, 2.0f };
-				std::unique_ptr<Weapon> weapon = std::make_unique<Weapon>(400.0f, transform, kiko::g_manager.Get("ship.txt"));
+				std::unique_ptr<Weapon> weapon = std::make_unique<Weapon>(400.0f, transform); //kiko::g_manager.Get("ship.txt")
 				weapon->m_tag = "Enemy";
 				m_scene->Add(std::move(weapon));
 

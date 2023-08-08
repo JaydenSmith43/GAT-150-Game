@@ -9,7 +9,7 @@ namespace kiko
 		if (m_texture) SDL_DestroyTexture(m_texture);
 	}
 
-	bool Texture::Create(Renderer& renderer, const std::string& filename)
+	bool Texture::Load(const std::string filename, Renderer& renderer)
 	{
 		SDL_Surface* surface = IMG_Load(filename.c_str());
 		if (!surface)
@@ -30,6 +30,19 @@ namespace kiko
 		return true;
 	}
 
+	bool Texture::Create(std::string filename, ...)
+	{
+		va_list args;
+
+		va_start(args, filename);
+
+		Renderer& renderer = va_arg(args, Renderer);
+
+		va_end(args);
+
+		return Load(filename, renderer);
+	}
+
 	vec2 Texture::GetSize()
 	{
 		// ASSERT texture is not null
@@ -40,4 +53,5 @@ namespace kiko
 		SDL_QueryTexture(this->m_texture, NULL, NULL, &point.x, &point.y);
 		return vec2{ point.x, point.y };
 	}
+
 }

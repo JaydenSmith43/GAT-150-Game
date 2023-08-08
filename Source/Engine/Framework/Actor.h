@@ -2,6 +2,7 @@
 #include "Core/Core.h"
 #include "Renderer/Model.h"
 #include <memory>
+#include "Components/Component.h"
 
 namespace kiko
 {
@@ -10,11 +11,6 @@ namespace kiko
 	public:
 		Actor() = default; // This automatically exists without typing
 
-		Actor(const kiko::Transform& transform, std::shared_ptr<Model> model) :
-			m_transform{ transform },
-			m_model{ model }
-		{}
-
 		Actor(const kiko::Transform& transform) :
 			m_transform{ transform }
 		{}
@@ -22,11 +18,12 @@ namespace kiko
 		virtual void Update(float dt);
 		virtual void Draw(kiko::Renderer& renderer);
 
-		float GetRadius() { return (m_model) ? m_model->GetRadius() * m_transform.scale : -10000; } // bigger functions are less likely to be inlined
-		virtual void OnCollision(Actor* other) {}
+		void AddComponent(std::unique_ptr<Component> component);
+		template<typename T>
+		T* GetComponent();
 
-		void AddForce(const vec2& force) { m_velocity += force; }
-		void SetDamping(float damping) { m_damping = damping; }
+		float GetRadius() { return 30.0f; } // bigger functions are less likely to be inlined //return (m_model) ? m_model->GetRadius() * m_transform.scale : -10000;
+		virtual void OnCollision(Actor* other) {}
 
 		class Scene* m_scene = nullptr; //forward declaration, also should probably be protected but isn't working
 		friend class Scene;
@@ -39,11 +36,20 @@ namespace kiko
 		float m_lifespan = -1.0f;
 
 	protected:
-		bool m_destroyed = false;
-		
-		std::shared_ptr<Model> m_model;
+		std::vector<std::unique_ptr<Component>> m_components;
 
-		vec2 m_velocity;
-		float m_damping = 0;
+		bool m_destroyed = false;
 	};
+
+	template<typename T>
+	inline T* Actor::GetComponent()
+	{
+		for (auto& component : m_components)
+		{
+			T* result = dynamic_cast<T*>(component.get()); //tries to cast data to type provided
+			if (result) return result; // if not nullptr
+		}
+
+		return nullptr;
+	}
 }

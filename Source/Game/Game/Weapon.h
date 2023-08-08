@@ -4,8 +4,8 @@
 class Weapon : public kiko::Actor
 {
 public:
-	Weapon(float speed, const kiko::Transform& transform, std::shared_ptr<kiko::Model> model) :
-		Actor{ transform, model },
+	Weapon(float speed, const kiko::Transform& transform) : //removing model as we dont specify it anymore
+		Actor{ transform },
 		m_speed{ speed } // could add parameter for lifespan
 	{
 		m_lifespan = 2.0f;
