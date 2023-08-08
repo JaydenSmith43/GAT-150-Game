@@ -77,7 +77,7 @@ namespace kiko
 		dest.y = (int)(y - (size.y * 0.5f));
 		dest.w = (int)size.x;
 		dest.h = (int)size.y;
-		// https://wiki.libsdl.org/SDL2/SDL_RenderCopyEx
+
 		SDL_RenderCopyEx(this->m_renderer, texture->m_texture, nullptr, &dest, angle, nullptr, SDL_FLIP_NONE);
 
 	}

@@ -2,10 +2,11 @@
 #include <Core/Core.h>
 #include "Renderer.h"
 #include <vector>
+#include "Framework/Resource/Resource.h"
 
 namespace kiko
 {
-	class Model
+	class Model : public Resource
 	{
 	public:
 		Model() = default;
@@ -21,5 +22,8 @@ namespace kiko
 		std::vector<vec2> m_points;
 		Color m_color;
 		float m_radius = 0;
+
+		// Inherited via Resource
+		virtual bool Create(std::string filename, ...) override;
 	};
 }
