@@ -5,45 +5,74 @@
 #include "Framework/Emitter.h"
 #include "Renderer/Renderer.h"
 #include "Weapon.h"
+#include "Framework/Framework.h"
+
+bool Enemy::Initialize()
+{
+	Actor::Initialize();
+
+	auto collisionComponent = GetComponent<kiko::CollisionComponent>();
+	if (collisionComponent)
+	{
+		auto renderComponent = GetComponent<kiko::RenderComponent>();
+		if (renderComponent)
+		{
+			float scale = transform.scale;
+			collisionComponent->m_radius = renderComponent->GetRadius() * scale * 0.75f;
+		}
+	}
+
+	return true;
+}
 
 void Enemy::Update(float dt)
 {
 	Actor::Update(dt);
 
-	kiko::vec2 forward = kiko::vec2{ 0, -1 }.Rotate(m_transform.rotation);
+	kiko::vec2 forward = kiko::vec2{ 0, -1 }.Rotate(transform.rotation);
 	Player* player = m_scene->GetActor<Player>();
 
 	if (player)
 	{
-		kiko::Vector2 direction = player->m_transform.position - m_transform.position; // could make a getter
+		kiko::Vector2 direction = player->transform.position - transform.position; // could make a getter
 
 		//turn towards player
 		float turnAngle = kiko::vec2::SignedAngle(forward, direction.Normalized());
-		m_transform.rotation += turnAngle * dt; // * 5
+		transform.rotation += turnAngle * dt; // * 5
 
 		//check if player is in front
 		if (std::fabs(turnAngle) < kiko::DegreesToRadians(30.0f))
 		{
 			if (m_fireTimer <= 0.0f)
 			{
-				kiko::Transform transform{ m_transform.position, m_transform.rotation, 0.5f };
-				std::unique_ptr<Weapon> weapon = std::make_unique<Weapon>(400.0f, transform); //model
-				weapon->m_tag = "Enemy";
-				m_scene->Add(std::move(weapon));
+				//kiko::Transform m_transform{ transform.position, transform.rotation, 0.5f };
+				//std::unique_ptr<WeaponComponent> weapon = std::make_unique<WeaponComponent>(400.0f, transform); //model
+				//weapon->tag = "Enemy";
 
-				m_fireTimer = m_fireRate;
+				//auto renderComponent = std::make_unique<kiko::SpriteComponent>();
+				//renderComponent->m_texture = GET_RESOURCE( kiko::Texture, "rocket.png", kiko::g_renderer); //get texture
+				//weapon->AddComponent(std::move(renderComponent));
+
+				//auto collisionComponent = std::make_unique<kiko::CircleCollisionComponent>();
+				//collisionComponent->m_radius = 30.0f;
+				//weapon->AddComponent(std::move(collisionComponent));
+
+				//weapon->Initialize();
+				//m_scene->Add(std::move(weapon));
+
+				//m_fireTimer = m_fireRate;
 			}
 		}
 	}
 
-	m_transform.position += forward * m_speed * kiko::g_time.GetDeltaTime();
-	m_transform.position.x = kiko::Wrap(m_transform.position.x, (float)kiko::g_renderer.GetWidth());
-	m_transform.position.y = kiko::Wrap(m_transform.position.y, (float)kiko::g_renderer.GetHeight());
+	transform.position += forward * m_speed * kiko::g_time.GetDeltaTime();
+	transform.position.x = kiko::Wrap(transform.position.x, (float)kiko::g_renderer.GetWidth());
+	transform.position.y = kiko::Wrap(transform.position.y, (float)kiko::g_renderer.GetHeight());
 
-	if (m_lifespan != -1.0f)
+	if (lifespan != -1.0f)
 	{
-		m_lifespan -= dt;
-		m_destroyed = (m_lifespan <= 0);
+		lifespan -= dt;
+		destroyed = (lifespan <= 0);
 	}
 
 	m_fireTimer -= dt;
@@ -55,11 +84,11 @@ void Enemy::OnCollision(Actor* other)
 	//could also use a dynamic cast
 	//Player* p = dynamic_cast<Player*>(other);
 
-	if (other->m_tag == "Player" && m_destroyed != true)
+	if (other->tag == "Player" && destroyed != true)
 	{
 		m_game->AddPoints(100.0f);
 		m_game->AddKills(1);
-		m_destroyed = true;
+		destroyed = true;
 
 		//create explosion
 		kiko::EmitterData data;
@@ -76,10 +105,9 @@ void Enemy::OnCollision(Actor* other)
 
 		data.color = kiko::Color{ 1, 1, 0, 1 };
 
-
-		kiko::Transform transform{ {m_transform.position.x, m_transform.position.y}, 0, 1 };
+		kiko::Transform m_transform{ {this->transform.position.x, this->transform.position.y}, 0, 1 };
 		auto emitter = std::make_unique<kiko::Emitter>(transform, data);
-		emitter->m_lifespan = 1.0f;
+		emitter->lifespan = 1.0f;
 		m_scene->Add(std::move(emitter));
 	}
 }

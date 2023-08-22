@@ -1,8 +1,7 @@
 #include "Renderer.h"
 #include "SDL2-2.28.0/include/SDL_ttf.h"
 #include "SDL2-2.28.0/include/SDL_image.h"
-#include "Core/Vector2.h"
-#include "Texture.h"
+#include "Core/Math/Vector2.h"
 //#include "SDL2-2.28.0/include/SDL_rect.h"
 namespace kiko
 {
@@ -69,16 +68,31 @@ namespace kiko
 	{
 		SDL_RenderDrawPoint(m_renderer, (int)x, (int)y);
 	}
-	void Renderer::DrawTexture(Texture* texture, float x, float y, float angle)
+	void Renderer::DrawTexture(Texture* texture, float x, float y, float angle, float scale)
 	{
 		vec2 size = texture->GetSize();
 		SDL_Rect dest;
-		dest.x = (int)(x - (size.x * 0.5f));
-		dest.y = (int)(y - (size.y * 0.5f));
-		dest.w = (int)size.x;
-		dest.h = (int)size.y;
+		dest.x = (int)(x - (size.x * 0.5f * scale)); //Using this in SPRITE COMPONENT
+		dest.y = (int)(y - (size.y * 0.5f * scale));
+		dest.w = (int)(size.x * scale);
+		dest.h = (int)(size.y * scale);
 
 		SDL_RenderCopyEx(this->m_renderer, texture->m_texture, nullptr, &dest, angle, nullptr, SDL_FLIP_NONE);
 
+	}
+	void Renderer::DrawTexture(Texture* texture, const kiko::Transform& transform)
+	{
+		mat3 mx = transform.GetMatrix();
+
+		vec2 position = mx.GetTranslation();
+		vec2 size = texture->GetSize();
+
+		SDL_Rect dest;
+		dest.x = (int)(position.x - (size.x * 0.5f));
+		dest.y = (int)(position.y - (size.y * 0.5f));
+		dest.w = (int)size.x;
+		dest.h = (int)size.y;
+
+		SDL_RenderCopyEx(this->m_renderer, texture->m_texture, nullptr, &dest, RadiansToDegrees(mx.GetRotation()), nullptr, SDL_FLIP_NONE);
 	}
 }

@@ -1,19 +1,27 @@
 #pragma once
 #include "Framework/Actor.h"
 
-class Weapon : public kiko::Actor
+namespace kiko
 {
-public:
-	Weapon(float speed, const kiko::Transform& transform) : //removing model as we dont specify it anymore
-		Actor{ transform },
-		m_speed{ speed } // could add parameter for lifespan
+	class Weapon : public Actor
 	{
-		m_lifespan = 2.0f;
-	}
+	public:
+		CLASS_DECLARATION(Weapon)
 
-	void Update(float dt) override;
-	void OnCollision(Actor* other) override;
+		/*
+		WeaponComponent(float speed, const kiko::Transform& transform) : //removing model as we dont specify it anymore
+			Actor{ transform },
+			speed{ speed } // could add parameter for lifespan
+		{
+			lifespan = 2.0f;
+		}
+		*/
+		bool Initialize() override;
+		void Update(float dt) override;
 
-private:
-	float m_speed = 0;
-};
+		void OnCollision(Actor* other);
+
+	private:
+		float speed = 0;
+	};
+}

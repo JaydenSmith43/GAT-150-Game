@@ -1,25 +1,23 @@
 #include "Core/Core.h"
 #include "Renderer/Renderer.h"
-#include "Renderer/ModelManager.h"
-#include "Renderer/Font.h"
-#include "Renderer/Text.h"
-#include "Renderer/ParticleSystem.h"
-#include "Renderer/Texture.h"
 
 #include "Input/InputSystem.h"
 #include "Audio/AudioSystem.h"
 #include "Player.h"
 #include "Enemy.h"
 
-#include "Framework/Scene.h"
-#include "Framework/Resource/ResourceManager.h"
-
+#include "Framework/Framework.h"
 #include "SpaceGame.h"
 
 #include <iostream>
 #include <vector>
 #include <thread>
 #include <array>
+
+//
+
+#include <functional>
+
 //#include <cassert> // ASSERT
 
 using namespace std;
@@ -50,35 +48,13 @@ public:
 
 };
 
-//template <typename T>
-//void print(const std::string& s, const T& container)
-//{
-//	std::cout << s << std::endl;
-//		for (auto element : container)
-//		{
-//			std::cout << element << " ";
-//		}
-//	std::cout << std::endl;
-//}
-
-//void print_arg(int count, ...)
-//{
-//	va_list args;
-//
-//	va_start(args, count);
-//	for (int i = 0; i < count; ++i)
-//	{
-//		std::cout << va_arg(args, const char*) << std::endl;
-//	}
-//
-//	va_end(args);
-//}
 
 int main(int argc, char* argv[])
 {
-	//print_arg(4, "hello", "world", "goodbye", "yo!");
+	kiko::Factory::Instance().Register<kiko::SpriteComponent>("SpriteComponent");
+	kiko::Factory::Instance().Register<kiko::SpriteComponent>("CircleCollisionComponent");
 
-	INFO_LOG("hello world");
+	INFO_LOG("Initialize Engine");
 
 	kiko::MemoryTracker::Initialize();
 	kiko::seed_random((unsigned int)time(nullptr));
@@ -89,14 +65,10 @@ int main(int argc, char* argv[])
 
 	kiko::g_inputSystem.Initialize();
 	kiko::g_audioSystem.Initialize();
+	//kiko::PhysicsSystem::Instance().Initialize();
 
 	unique_ptr<SpaceGame> game = make_unique<SpaceGame>();
 	game->Initialize();
-
-
-	//kiko::vec2 v{5, 5};
-	//v.Normalize();
-
 
 	vector<Star> stars;
 	for (int i = 0; i < 100; i++) {
@@ -105,10 +77,6 @@ int main(int argc, char* argv[])
 
 		stars.push_back(Star(pos, vel));
 	}
-
-
-	//kiko::vec2 position { 400, 300 };
-	//kiko::Transform transform{ { 400, 300 }, 0, 3};
 	
 	float speed = 350;
 	constexpr float turnRate = kiko::DegreesToRadians(180.0f); //? //cast to fix
@@ -145,7 +113,7 @@ int main(int argc, char* argv[])
 		kiko::g_audioSystem.Update();
 
 
-		//update game
+		// update game
 		game->Update(kiko::g_time.GetDeltaTime());
 
 
@@ -155,9 +123,10 @@ int main(int argc, char* argv[])
 			cout << "mouse located at: " << kiko::g_inputSystem.GetMousePosition().x << "," << kiko::g_inputSystem.GetMousePosition().y << endl;
 		}
 
-
+		// draw game
 		kiko::g_renderer.SetColor(0, 0, 0, 0);
 		kiko::g_renderer.BeginFrame();
+		game->Draw(kiko::g_renderer);
 
 		for (auto& star : stars) {
 			star.Update(kiko::g_renderer.GetWidth(), kiko::g_renderer.GetHeight());
@@ -167,7 +136,7 @@ int main(int argc, char* argv[])
 			star.Draw(kiko::g_renderer);
 		}
 		
-		game->Draw(kiko::g_renderer);
+		
 
 		//kiko::g_renderer.DrawTexture(texture.get(), 0.0f, 0.0f, 0.0f);
 

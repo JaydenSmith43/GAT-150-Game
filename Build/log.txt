@@ -1,1 +1,9 @@
-INFO: Main.cpp(81) hello world
+INFO: Factory.h(73) Class Registered: Weapon
+INFO: Factory.h(73) Class Registered: Actor
+INFO: Factory.h(73) Class Registered: SpriteComponent
+INFO: Factory.h(73) Class Registered: EnginePhysicsComponent
+INFO: Factory.h(73) Class Registered: CircleCollisionComponent
+INFO: Factory.h(73) Class Registered: SpriteComponent
+INFO: Factory.h(73) Class Registered: CircleCollisionComponent
+INFO: Main.cpp(52) Initialize Engine
+INFO: Factory.h(81) Prototype Class Registered: Rocket

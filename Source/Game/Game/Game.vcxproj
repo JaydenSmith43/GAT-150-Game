@@ -159,6 +159,7 @@
   <ItemGroup>
     <ClInclude Include="Boss.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Notes.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SpaceGame.h" />
     <ClInclude Include="Weapon.h" />
@@ -179,6 +180,9 @@
     <ProjectReference Include="..\..\Engine\Renderer\Renderer.vcxproj">
       <Project>{865351cf-86ec-4eee-9052-5a643e216b45}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\Build\Assets\scene.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

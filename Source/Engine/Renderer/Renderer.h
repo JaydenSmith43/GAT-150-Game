@@ -1,6 +1,14 @@
 #pragma once
-#include <string>
+#include "Font.h"
+#include "Model.h"
+#include "Particle.h"
+#include "ParticleSystem.h"
+#include "Text.h"
+#include "Texture.h"
+
 #include <SDL2-2.28.0/include/SDL.h>
+#include <string>
+#include "Core/Core.h"
 
 namespace kiko
 {
@@ -26,7 +34,8 @@ namespace kiko
 		void DrawPoint(int x, int y);
 		void DrawPoint(float x, float y);
 
-		void DrawTexture(class Texture* texture, float x, float y, float angle = 0.0f);
+		void DrawTexture(class Texture* texture, float x, float y, float angle = 0.0f, float scale = 1.0f);
+		void DrawTexture(class Texture* texture, const kiko::Transform& transform);
 
 		int GetWidth() { return m_width; }
 		int GetHeight() { return m_height; }

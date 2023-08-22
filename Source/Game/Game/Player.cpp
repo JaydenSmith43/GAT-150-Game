@@ -8,7 +8,29 @@
 #include "Framework/Resource/ResourceManager.h"
 #include "Framework/Components/EnginePhysicsComponent.h"
 #include "Renderer/Texture.h"
+#include "Framework/Components/CircleCollisionComponent.h"
 //renderer? 
+
+bool Player::Initialize()
+{
+	Actor::Initialize();
+
+	//cache off
+	m_physicsComponent = GetComponent<kiko::PhysicsComponent>();
+
+	auto collisionComponent = GetComponent<kiko::CollisionComponent>();
+	if (collisionComponent)
+	{
+		auto renderComponent = GetComponent<kiko::RenderComponent>();
+		if (renderComponent)
+		{
+			float scale = transform.scale;
+			collisionComponent->m_radius = renderComponent->GetRadius() * scale * 0.75f;
+		}
+	}
+
+	return true;
+}
 
 void Player::Update(float dt)
 {
@@ -18,43 +40,57 @@ void Player::Update(float dt)
 	float rotate = 0;
 	if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_A)) rotate = -1.5;
 	if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_D)) rotate = 1.5;
-	m_transform.rotation += rotate * m_turnRate * kiko::g_time.GetDeltaTime();
+	transform.rotation += rotate * m_turnRate * kiko::g_time.GetDeltaTime();
 
 	float thrust = 0;
 	if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_W)) thrust = 1;
 
-	kiko::vec2 forward = kiko::vec2{ 0, -1 }.Rotate(m_transform.rotation);
+	kiko::vec2 forward = kiko::vec2{ 0, -1 }.Rotate(transform.rotation);
 
-	auto physicsComponent = GetComponent<kiko::PhysicsComponent>();
-	physicsComponent->ApplyForce(forward * m_speed * thrust);
+	m_physicsComponent->ApplyForce(forward * m_speed * thrust);
 
-	//m_transform.position += forward * m_speed * thrust * kiko::g_time.GetDeltaTime();
-	m_transform.position.x = kiko::Wrap(m_transform.position.x, (float)kiko::g_renderer.GetWidth());
-	m_transform.position.y = kiko::Wrap(m_transform.position.y, (float)kiko::g_renderer.GetHeight());
+	//transform.position += forward * speed * thrust * kiko::g_time.GetDeltaTime();
+	transform.position.x = kiko::Wrap(transform.position.x, (float)kiko::g_renderer.GetWidth());
+	transform.position.y = kiko::Wrap(transform.position.y, (float)kiko::g_renderer.GetHeight());
 
 	// fire weapon
 	if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_SPACE) && !kiko::g_inputSystem.GetPreviousKeyDown(SDL_SCANCODE_SPACE))
 	{
-		//create weapon
-		kiko::Transform transform1{ m_transform.position, m_transform.rotation + kiko::DegreesToRadians(10.0f), 1.0f };
-		std::unique_ptr<Weapon> weapon = std::make_unique<Weapon>(600.0f, transform1); //dont add model, we sepcify it with the component system
-		weapon->m_tag = "Player";
+		auto weapon = INSTANTIATE(Weapon, "Rocket")
+		weapon->transform = { transform.position, transform.rotation + kiko::DegreesToRadians(10.0f), 1 };
+		weapon->Initialize();
+		m_scene->Add(std::move(weapon));
 
-		std::unique_ptr<kiko::SpriteComponent> component = std::make_unique<kiko::SpriteComponent>();
-		component->m_texture = kiko::g_resources.Get<kiko::Texture>("rocket.png", kiko::g_renderer);
-		weapon->AddComponent(std::move(component));
+		////create weapon
+		//kiko::Transform transform1{ transform.position, transform.rotation + kiko::DegreesToRadians(10.0f), 1.0f };
+		//std::unique_ptr<WeaponComponent> weapon = std::make_unique<WeaponComponent>(600.0f, transform1); //dont add model, we specify it with the component system
+		//weapon->tag = "Player";
 
-		m_scene->Add(std::move(weapon)); //moving ownership to parameter we are passing
+		//auto renderComponent = std::make_unique<kiko::SpriteComponent>();
+		//renderComponent->m_texture = GET_RESOURCE(kiko::Texture, "rocket.png", kiko::g_renderer); // get texture
+		//weapon->AddComponent(std::move(renderComponent));
 
-		kiko::Transform transform2{ m_transform.position, m_transform.rotation - kiko::DegreesToRadians(10.0f), 1.0f };
-		weapon = std::make_unique<Weapon>(600.0f, transform2);
-		weapon->m_tag = "Player";
+		//auto collisionComponent = std::make_unique<kiko::CircleCollisionComponent>();
+		//collisionComponent->m_radius = 30.0f;
+		//weapon->AddComponent(std::move(collisionComponent));
 
-		component = std::make_unique<kiko::SpriteComponent>();
-		component->m_texture = kiko::g_resources.Get<kiko::Texture>("rocket.png", kiko::g_renderer);
-		weapon->AddComponent(std::move(component));
+		//weapon->Initialize();
+		//m_scene->Add(std::move(weapon)); //moving ownership to parameter we are passing
 
-		m_scene->Add(std::move(weapon)); 
+		//kiko::Transform transform2{ transform.position, transform.rotation - kiko::DegreesToRadians(10.0f), 1.0f };
+		//weapon = std::make_unique<WeaponComponent>(600.0f, transform2);
+		//weapon->tag = "Player";
+
+		//renderComponent = std::make_unique<kiko::SpriteComponent>();
+		//renderComponent->m_texture = GET_RESOURCE(kiko::Texture, "rocket.png", kiko::g_renderer); //get texture
+		//weapon->AddComponent(std::move(renderComponent));
+
+		//collisionComponent = std::make_unique<kiko::CircleCollisionComponent>();
+		//collisionComponent->m_radius = 30.0f;
+		//weapon->AddComponent(std::move(collisionComponent));
+
+		//weapon->Initialize();
+		//m_scene->Add(std::move(weapon)); 
 	}
 
 	if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_T))
@@ -63,8 +99,8 @@ void Player::Update(float dt)
 	}
 	else  kiko::g_time.SetTimeScale(1.0f);
 
-	m_transform.position.x +=  kiko::randomf(-1.0f, 1.0f);
-	m_transform.position.y += kiko::randomf(-1.0f, 1.0f);
+	transform.position.x +=  kiko::randomf(-1.0f, 1.0f);
+	transform.position.y += kiko::randomf(-1.0f, 1.0f);
 
 	if (kiko::g_inputSystem.GetMouseButtonDown(0) || kiko::g_inputSystem.GetMouseButtonDown(1) || kiko::g_inputSystem.GetMouseButtonDown(2))
 	{
@@ -84,7 +120,7 @@ void Player::Update(float dt)
 
 		kiko::Transform transform{ { kiko::g_inputSystem.GetMousePosition() }, 0, 1 };
 		auto emitter = std::make_unique<kiko::Emitter>(transform, data);
-		emitter->m_lifespan = 1.0f;
+		emitter->lifespan = 1.0f;
 		m_scene->Add(std::move(emitter));
 	}
 	
@@ -93,10 +129,10 @@ void Player::Update(float dt)
 
 void Player::OnCollision(Actor* other)
 {
-	if (other->m_tag == "Enemy")
+	if (other->tag == "Enemy")
 	{
 		m_game->SetLives(m_game->GetLives() - 1);
-		m_destroyed = true;
+		destroyed = true;
 		dynamic_cast<SpaceGame*>(m_game)->SetState(SpaceGame::eState::PlayerDeadStart);
 
 		kiko::EmitterData data;
@@ -114,9 +150,9 @@ void Player::OnCollision(Actor* other)
 		data.color = kiko::Color{ 1, 1, 0, 1 };
 
 
-		kiko::Transform transform{ {m_transform.position.x, m_transform.position.y}, 0, 1 };
+		kiko::Transform m_transform{ {transform.position.x, transform.position.y}, 0, 1 };
 		auto emitter = std::make_unique<kiko::Emitter>(transform, data);
-		emitter->m_lifespan = 1.0f;
+		emitter->lifespan = 1.0f;
 		m_scene->Add(std::move(emitter));
 		
 	}

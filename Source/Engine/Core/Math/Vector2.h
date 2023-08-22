@@ -14,6 +14,11 @@ namespace kiko
 		Vector2(float x, float y) : x{ x }, y{ y } {}
 		Vector2(int x, int y) : x{ (float)x }, y{ (float)y } {}
 
+		float operator [] (size_t index) const { return (&x)[index]; }
+		float& operator [] (size_t index) { return (&x)[index]; }
+
+		Vector2 operator - () const { return Vector2(-x, -y); }
+
 		//Vector2 Add(const Vector2& v) const { return Vector2(x + v.x, y + v.y); }
 		Vector2 operator + (const Vector2& v) const { return Vector2(x + v.x, y + v.y); }
 		Vector2 operator - (const Vector2& v) const { return Vector2(x - v.x, y - v.y); }
@@ -46,6 +51,12 @@ namespace kiko
 		static float Angle(const Vector2& v1, const Vector2& v2);
 		static float Dot(const Vector2& v1, const Vector2& v2);
 	};
+
+	inline std::ostream& operator<<(std::ostream& stream, const Vector2& v)
+	{
+		stream << v.x << " " << v.y;
+		return stream;
+	}
 
 	inline Vector2 Vector2::Rotate(float radians) const // no multiply defined funcs
 	{

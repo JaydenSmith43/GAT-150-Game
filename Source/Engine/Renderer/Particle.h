@@ -1,6 +1,5 @@
 #pragma once
 #include "Core/Core.h"
-#include "Renderer.h"
 
 namespace kiko
 {
@@ -29,7 +28,7 @@ namespace kiko
 			m_isActive = true;
 		}
 		void Update(float dt);
-		void Draw(Renderer& renderer);
+		void Draw(class Renderer& renderer);
 
 		friend class ParticleSystem;
 	private:
