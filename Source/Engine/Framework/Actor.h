@@ -1,6 +1,6 @@
 #pragma once
 #include "Object.h"
-#include "Core/Core.h"
+
 #include "Renderer/Model.h"
 #include <memory>
 #include "Components/Component.h"

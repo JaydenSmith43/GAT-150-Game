@@ -14,7 +14,7 @@
 #include <thread>
 #include <array>
 
-//
+#include "Physics/PhysicsSystem.h"
 
 #include <functional>
 
@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
 
 	kiko::g_inputSystem.Initialize();
 	kiko::g_audioSystem.Initialize();
-	//kiko::PhysicsSystem::Instance().Initialize();
+	kiko::PhysicsSystem::Instance().Initialize(); //Crash
 
 	unique_ptr<SpaceGame> game = make_unique<SpaceGame>();
 	game->Initialize();

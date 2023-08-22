@@ -5,5 +5,9 @@ INFO: Factory.h(73) Class Registered: EnginePhysicsComponent
 INFO: Factory.h(73) Class Registered: CircleCollisionComponent
 INFO: Factory.h(73) Class Registered: SpriteComponent
 INFO: Factory.h(73) Class Registered: CircleCollisionComponent
-INFO: Main.cpp(52) Initialize Engine
+INFO: Main.cpp(57) Initialize Engine
 INFO: Factory.h(81) Prototype Class Registered: Rocket
+INFO: EventManager.cpp(16) Event subscribed: OnAddPoints
+INFO: EventManager.cpp(16) Event subscribed: OnPlayerDead
+INFO: EventManager.cpp(16) Event subscribed: OnAddPoints
+INFO: EventManager.cpp(16) Event subscribed: OnPlayerDead

@@ -10,7 +10,6 @@
 #include "Renderer/Renderer.h"
 
 
-
 bool SpaceGame::Initialize()
 {
 	// create font / text objects
@@ -39,6 +38,14 @@ bool SpaceGame::Initialize()
 	m_scene = std::make_unique<kiko::Scene>();
 	m_scene->Load("scene.json");
 	m_scene->Initialize();
+	//m_scene->SetGame(this)
+
+	// add events
+	EVENT_SUBSCRIBE("OnAddPoints", SpaceGame::OnAddPoints);
+	EVENT_SUBSCRIBE("OnPlayerDead", SpaceGame::OnPlayerDead);
+
+	kiko::EventManager::Instance().Subscribe("OnAddPoints", this, std::bind(&SpaceGame::OnAddPoints, this, std::placeholders::_1));
+	kiko::EventManager::Instance().Subscribe("OnPlayerDead", this, std::bind(&SpaceGame::OnPlayerDead, this, std::placeholders::_1));
 
 	return true;
 }
@@ -237,7 +244,7 @@ void SpaceGame::SpawnShip()
 
 	m_spawnTimer = 0;
 
-	std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>((kiko::randomf(75.0f, 150.0f)), kiko::Pi, kiko::Transform{ {borderSpawnX + kiko::random(50), borderSpawnY + kiko::random(25)},
+	std::unique_ptr<kiko::Enemy> enemy = std::make_unique<kiko::Enemy>((kiko::randomf(75.0f, 150.0f)), kiko::Pi, kiko::Transform{ {borderSpawnX + kiko::random(50), borderSpawnY + kiko::random(25)},
 		kiko::randomf(kiko::TwoPi), 2.0f}); // kiko::g_manager.Get("enemy.txt")
 
 	enemy->tag = "Enemy";
@@ -253,4 +260,15 @@ void SpaceGame::SpawnShip()
 
 	enemy->Initialize();
 	m_scene->Add(std::move(enemy));
+}
+
+void SpaceGame::OnAddPoints(const kiko::Event& event)
+{
+	m_score += std::get<int>(event.data);
+}
+
+void SpaceGame::OnPlayerDead(const kiko::Event& event)
+{
+	m_lives--;
+	m_state = eState::PlayerDeadStart;
 }

@@ -11,7 +11,7 @@ namespace kiko
 		void Update(float dt);
 		friend class Singleton;
 	private:
-		PhysicsSystem();
+		PhysicsSystem() = default;
 	private:
 		std::unique_ptr<b2World> m_world;
 	};

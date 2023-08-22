@@ -131,9 +131,10 @@ void Player::OnCollision(Actor* other)
 {
 	if (other->tag == "Enemy")
 	{
-		m_game->SetLives(m_game->GetLives() - 1);
+		kiko::EventManager::Instance().DispatchEvent("OnPlayerDead", 0);
 		destroyed = true;
-		dynamic_cast<SpaceGame*>(m_game)->SetState(SpaceGame::eState::PlayerDeadStart);
+		//m_game->SetLives(m_game->GetLives() - 1);
+		//dynamic_cast<SpaceGame*>(m_game)->SetState(SpaceGame::eState::PlayerDeadStart);
 
 		kiko::EmitterData data;
 		data.burst = true;
