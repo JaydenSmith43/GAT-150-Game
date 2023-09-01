@@ -113,6 +113,7 @@ namespace kiko
 			// animation
 			if (onGround && kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_E) && !kiko::g_inputSystem.GetPreviousKeyDown(SDL_SCANCODE_E))
 			{
+				//adding this
 				m_spriteAnimComponent->SetSequence("attack");
 				attackTimerActive = true;
 
