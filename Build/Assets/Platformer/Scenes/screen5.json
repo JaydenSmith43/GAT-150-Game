@@ -1,0 +1,151 @@
+{
+	"actors":[
+		{
+			"type":"Actor",
+			"name":"topGrass",
+			"tag":"Ground",
+			"prototype":true,
+			"transform":{
+				"scale": 4
+			},
+			"components":[
+				{
+					"type":"SpriteComponent",
+					"textureName":"textures/tilemap-16.png",
+					"source":[
+						16,
+						464,
+						16,
+						16
+					]
+				},
+				{
+					"type":"Box2DPhysicsComponent",
+					"isDynamic":false
+				},
+				{
+					"type":"Box2DCollisionComponent",
+					"restitution":0
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"name": "underGrass",
+			"tag": "Ground",
+			"prototype": true,
+			"transform": {
+				"scale": 4
+			},
+			"components": [
+				{
+					"type": "SpriteComponent",
+					"textureName": "textures/tilemap-16.png",
+					"source": [
+						16,
+						480,
+						16,
+						16
+					]
+				},
+				{
+					"type": "Box2DPhysicsComponent",
+					"isDynamic": false
+				},
+				{
+					"type": "Box2DCollisionComponent",
+					"restitution": 0
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"name": "greyBrick",
+			"tag": "Ground",
+			"prototype": true,
+			"transform": {
+				"scale": 4
+			},
+			"components": [
+				{
+					"type": "SpriteComponent",
+					"textureName": "textures/tilemap-16.png",
+					"source": [
+						0,
+						64,
+						16,
+						16
+					]
+				},
+				{
+					"type": "Box2DPhysicsComponent",
+					"isDynamic": false
+				},
+				{
+					"type": "Box2DCollisionComponent",
+					"restitution": 0
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"name": "bounceTile",
+			"tag": "Bounce",
+			"prototype": true,
+			"transform": {
+				"scale": 4
+			},
+			"components": [
+				{
+					"type": "SpriteComponent",
+					"textureName": "textures/tilemap-16.png",
+					"source": [
+						144,
+						128,
+						16,
+						16
+					]
+				},
+				{
+					"type": "Box2DPhysicsComponent",
+					"isDynamic": false
+				},
+				{
+					"type": "Box2DCollisionComponent",
+					"restitution": 1
+				}
+			]
+		},
+		{
+			"type":"Actor",
+			"name":"World2",
+			"transform":{
+				"position":[
+					32,
+					32
+				]
+			},
+			"components":[
+				{
+					"type":"TilemapComponent",
+					"numColumns": 13,
+					"numRows": 10,
+					"size": [64, 64],
+					"tileNames": [ "", "topGrass", "underGrass", "greyBrick" ],
+					"tiles": [
+							0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+							0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+							0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+							0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+							0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+							0, 0, 0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0,
+							0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+							0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+							1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+							2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
+							]
+				}    
+			]
+		}
+	]
+}

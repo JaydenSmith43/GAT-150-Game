@@ -1,5 +1,6 @@
 #pragma once
 #include "CollisionComponent.h"
+#include "Framework/Factory.h"
 
 namespace kiko
 {

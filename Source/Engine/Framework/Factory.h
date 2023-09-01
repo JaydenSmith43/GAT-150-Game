@@ -1,9 +1,9 @@
 #pragma once
 #include "Core/Logger.h"
 #include "Singleton.h"
-#include <memory>
 #include <map>
 #include <string>
+#include <memory>
 
 #define CREATE_CLASS(classname) kiko::Factory::Instance().Create<kiko::classname>(#classname);
 #define CREATE_CLASS_BASE(classbase, classname) kiko::Factory::Instance().Create<kiko::classbase>(classname);

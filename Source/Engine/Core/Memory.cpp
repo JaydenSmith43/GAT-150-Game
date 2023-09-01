@@ -1,5 +1,5 @@
-#include "Memory.h"
 #include <iostream>
+#include "Memory.h"
 
 namespace kiko
 {

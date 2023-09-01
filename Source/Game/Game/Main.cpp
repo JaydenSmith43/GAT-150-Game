@@ -51,14 +51,14 @@ public:
 
 int main(int argc, char* argv[])
 {
-	kiko::Factory::Instance().Register<kiko::SpriteComponent>("SpriteComponent");
-	kiko::Factory::Instance().Register<kiko::SpriteComponent>("CircleCollisionComponent");
+	//kiko::Factory::Instance().Register<kiko::SpriteComponent>("SpriteComponent");
+	//kiko::Factory::Instance().Register<kiko::CircleCollisionComponent>("CircleCollisionComponent");
 
 	INFO_LOG("Initialize Engine");
 
 	kiko::MemoryTracker::Initialize();
 	kiko::seed_random((unsigned int)time(nullptr));
-	kiko::setFilePath("assets");
+	kiko::setFilePath("assets/Space");
 
 	kiko::g_renderer.Initialize();
 	kiko::g_renderer.CreateWindow("CSC196", 800, 600);
@@ -78,8 +78,8 @@ int main(int argc, char* argv[])
 		stars.push_back(Star(pos, vel));
 	}
 	
-	float speed = 350;
-	constexpr float turnRate = kiko::DegreesToRadians(180.0f); //? //cast to fix
+	//float speed = 350;
+	//constexpr float turnRate = kiko::DegreesToRadians(180.0f); //? //cast to fix
 
 	// create texture
 	

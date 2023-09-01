@@ -2,8 +2,8 @@
 #include "Object.h"
 
 #include "Renderer/Model.h"
-#include <memory>
 #include "Components/Component.h"
+#include <memory>
 
 namespace kiko
 {
@@ -17,7 +17,11 @@ namespace kiko
 		Actor(const kiko::Transform& transform) :
 			transform{ transform }
 		{}
+
 		Actor(const Actor& other);
+		virtual ~Actor() {
+			OnDestroy();
+		}
 
 		virtual bool Initialize() override;
 		virtual void OnDestroy() override;
@@ -29,8 +33,9 @@ namespace kiko
 		template<typename T>
 		T* GetComponent();
 
-		float GetRadius() { return 30.0f; } // bigger functions are less likely to be inlined //return (m_model) ? m_model->GetRadius() * transform.scale : -10000;
-		virtual void OnCollision(Actor* other) {}
+		//float GetRadius() { return 30.0f; } // bigger functions are less likely to be inlined //return (m_model) ? m_model->GetRadius() * transform.scale : -10000;
+		virtual void OnCollisionEnter(Actor* other) {}
+		virtual void OnCollisionExit(Actor* other) {}
 
 		class Scene* m_scene = nullptr; //forward declaration, also should probably be protected but isn't working
 		friend class Scene;

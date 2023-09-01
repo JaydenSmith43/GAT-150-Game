@@ -9,7 +9,7 @@
 
 namespace kiko
 {
-	//CLASS_DEFINITION(Enemy)
+	CLASS_DEFINITION(Enemy)
 
 	bool Enemy::Initialize()
 	{
@@ -42,7 +42,8 @@ namespace kiko
 
 			//turn towards player
 			float turnAngle = kiko::vec2::SignedAngle(forward, direction.Normalized());
-			transform.rotation += turnAngle * dt; // * 5
+			//transform.rotation += turnAngle * dt; // * 5
+			//m_physicsComponent->ApplyTorque(turnAngle);
 
 			//check if player is in front
 			if (std::fabs(turnAngle) < kiko::DegreesToRadians(30.0f))
@@ -83,7 +84,7 @@ namespace kiko
 
 	}
 
-	void Enemy::OnCollision(Actor* other)
+	void Enemy::OnCollisionEnter(Actor* other)
 	{
 		//could also use a dynamic cast
 		//Player* p = dynamic_cast<Player*>(other);
@@ -115,5 +116,14 @@ namespace kiko
 			emitter->lifespan = 1.0f;
 			m_scene->Add(std::move(emitter));
 		}
+	}
+
+	void Enemy::Read(const json_t& value) 
+	{
+		Actor::Read(value);
+
+		READ_DATA(value, m_speed);
+		READ_DATA(value, m_turnRate);
+		READ_DATA(value, m_fireRate);
 	}
 }

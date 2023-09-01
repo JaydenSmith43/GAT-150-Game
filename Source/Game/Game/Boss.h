@@ -14,7 +14,7 @@
 //	}
 //
 //	void Update(float dt) override;
-//	void OnCollision(Actor* other) override;
+//	void OnCollisionEnter(Actor* other) override;
 //
 //private:
 //	float m_speed = 0;

@@ -89,3 +89,18 @@
 	//kiko::vec2 v2;
 	//kiko::Json::Read(document, "vector2", v2, false);
 	//std::cout << v2 << std::endl;
+
+
+
+//auto actor = INSTANTIATE(Actor, "Crate");
+//actor->transform.position = { kiko::random(kiko::g_renderer.GetWidth()), 100 };
+//actor->Initialize();
+//m_scene->Add(std::move(actor));
+
+//camera.x = (int)(m_scene->GetActorByName("Player")->transform.position.x - 400);
+//camera.y = (int)(m_scene->GetActorByName("Player")->transform.position.y - 300);
+
+//if (camera.x < 0) camera.x = 0;
+//if (camera.y < 0) camera.y = 0;
+//if (camera.x > camera.w) camera.x = camera.w;
+//if (camera.y > camera.h) camera.y = camera.h;

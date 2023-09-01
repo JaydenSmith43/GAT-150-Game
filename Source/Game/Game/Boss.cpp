@@ -51,7 +51,7 @@
 //
 //}
 //
-//void Boss::OnCollision(Actor* other)
+//void Boss::OnCollisionEnter(Actor* other)
 //{
 //	//could also use a dynamic cast
 //	//Player* p = dynamic_cast<Player*>(other);

@@ -41,7 +41,7 @@ namespace kiko
 		READ_DATA(value, speed);
 	}
 
-	void Weapon::OnCollision(Actor* other)
+	void Weapon::OnCollisionEnter(Actor* other)
 	{
 		if (other->tag != tag)
 		{
