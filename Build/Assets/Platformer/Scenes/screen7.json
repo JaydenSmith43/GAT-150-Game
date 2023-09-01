@@ -15,11 +15,11 @@
           "numColumns": 13,
           "numRows": 10,
           "size": [ 64, 64 ],
-          "tileNames": [ "", "topGrass", "underGrass", "greyBrick", "bounceTile" ],
+          "tileNames": [ "", "topGrass", "underGrass", "greyBrick", "bounceTile", "key" ],
           "tiles": [
 							3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
 							3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
-							3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
+							3, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 3,
 							3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
 							3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,
 							3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,

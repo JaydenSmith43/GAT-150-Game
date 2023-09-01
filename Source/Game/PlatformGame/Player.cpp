@@ -58,6 +58,15 @@ namespace kiko
 			}
 			break;
 
+		case playerState::CrouchAttack:
+			if (attackTimer <= 0)
+			{
+				attackTimerActive = false;
+				attackTimer = 1;
+				m_state = playerState::Crouch;
+			}
+			break;
+
 		case playerState::Crouch:
 			if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_A))
 			{
@@ -69,6 +78,23 @@ namespace kiko
 				dir = 1; 
 				facing = -1;
 			}
+
+			if (onGround && kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_E) && !kiko::g_inputSystem.GetPreviousKeyDown(SDL_SCANCODE_E))
+			{
+				attackTimerActive = true;
+
+				int xPos = 60 * facing;
+				auto hitbox = INSTANTIATE(Hitbox, "Hitbox")
+				m_spriteAnimComponent->SetSequence("crouch-attack");
+				hitbox->transform = { vec2 {transform.position.x - xPos,transform.position.y - 30}, 0, 1 };
+				hitbox->Initialize();
+				m_scene->Add(std::move(hitbox));
+
+
+				m_state = playerState::Attack;
+				break;
+			}
+
 			if (dir != 0) m_spriteAnimComponent->flipH = (dir < 0);
 
 			if (onGround && !kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_S))
@@ -112,16 +138,16 @@ namespace kiko
 
 			// animation
 			if (onGround && kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_E) && !kiko::g_inputSystem.GetPreviousKeyDown(SDL_SCANCODE_E))
-			{
-				//adding this
-				m_spriteAnimComponent->SetSequence("attack");
+			{	
 				attackTimerActive = true;
 
 				int xPos = 60 * facing;
 				auto hitbox = INSTANTIATE(Hitbox, "Hitbox")
+				m_spriteAnimComponent->SetSequence("attack");
 				hitbox->transform = { vec2 {transform.position.x - xPos,transform.position.y - 50}, 0, 1 };
 				hitbox->Initialize();
 				m_scene->Add(std::move(hitbox));
+				
 
 				m_state = playerState::Attack;
 				break;
@@ -181,8 +207,21 @@ namespace kiko
 			hurtTimerActive = true;
 			m_spriteAnimComponent->SetSequence("hurt");
 			health -= 10;
+			kiko::EventManager::Instance().DispatchEvent("OnPlayerHit", 0);
 			m_state = playerState::Hurt;
 			
+		}
+
+		if (other->tag == "Key")
+		{
+			hasKey = true;
+			tag = "hasKey";
+			other->destroyed = true;
+		}
+
+		if (other->tag == "KeyHole" && tag == "hasKey")
+		{
+			other->destroyed = true;
 		}
 	}
 

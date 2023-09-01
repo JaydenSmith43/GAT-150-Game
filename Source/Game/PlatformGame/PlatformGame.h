@@ -33,6 +33,7 @@ public:
 	void SetState(eState state) { m_state = state; }
 	void OnAddPoints(const kiko::Event& event);
 	void OnEnemyDead(const kiko::Event& event);
+	void OnPlayerHit(const kiko::Event& event);
 
 	//SDL_Rect camera{ 0, 0, 800, 600 };
 
@@ -48,6 +49,8 @@ private:
 	int m_currentScreen = 5;
 	int spawnLocationX = 0;
 	int spawnLocationY = 0;
+
+	bool hasKey = false;
 
 	std::string loadString = "Scenes/screen5.json";
 };

@@ -16,20 +16,32 @@ INFO: Main.cpp(24) Initialize Engine
 INFO: Factory.h(81) Prototype Class Registered: Coin
 INFO: Factory.h(81) Prototype Class Registered: Crate
 INFO: Factory.h(81) Prototype Class Registered: Hitbox
+INFO: Factory.h(81) Prototype Class Registered: keyHole
+INFO: Factory.h(81) Prototype Class Registered: key
 INFO: Factory.h(81) Prototype Class Registered: topGrass
 INFO: Factory.h(81) Prototype Class Registered: underGrass
 INFO: Factory.h(81) Prototype Class Registered: greyBrick
 INFO: Factory.h(81) Prototype Class Registered: bounceTile
 INFO: EventManager.cpp(16) Event subscribed: OnAddPoints
 INFO: EventManager.cpp(16) Event subscribed: OnEnemyDead
+INFO: EventManager.cpp(16) Event subscribed: OnPlayerHit
 INFO: EventManager.cpp(16) Event subscribed: OnAddPoints
 INFO: EventManager.cpp(16) Event subscribed: OnEnemyDead
+INFO: EventManager.cpp(16) Event subscribed: OnPlayerHit
 INFO: Factory.h(81) Prototype Class Registered: Coin
 INFO: Factory.h(81) Prototype Class Registered: Crate
 INFO: Factory.h(81) Prototype Class Registered: Hitbox
 INFO: Factory.h(81) Prototype Class Registered: Coin
 INFO: Factory.h(81) Prototype Class Registered: Crate
 INFO: Factory.h(81) Prototype Class Registered: Hitbox
+INFO: Factory.h(81) Prototype Class Registered: Coin
+INFO: Factory.h(81) Prototype Class Registered: Crate
+INFO: Factory.h(81) Prototype Class Registered: Hitbox
+INFO: Factory.h(81) Prototype Class Registered: Coin
+INFO: Factory.h(81) Prototype Class Registered: Crate
+INFO: Factory.h(81) Prototype Class Registered: Hitbox
+INFO: Factory.h(81) Prototype Class Registered: keyHole
+INFO: Factory.h(81) Prototype Class Registered: key
 INFO: Factory.h(81) Prototype Class Registered: topGrass
 INFO: Factory.h(81) Prototype Class Registered: underGrass
 INFO: Factory.h(81) Prototype Class Registered: greyBrick
@@ -37,45 +49,6 @@ INFO: Factory.h(81) Prototype Class Registered: bounceTile
 INFO: Factory.h(81) Prototype Class Registered: Coin
 INFO: Factory.h(81) Prototype Class Registered: Crate
 INFO: Factory.h(81) Prototype Class Registered: Hitbox
-INFO: Factory.h(81) Prototype Class Registered: Coin
-INFO: Factory.h(81) Prototype Class Registered: Crate
-INFO: Factory.h(81) Prototype Class Registered: Hitbox
-INFO: Factory.h(81) Prototype Class Registered: topGrass
-INFO: Factory.h(81) Prototype Class Registered: underGrass
-INFO: Factory.h(81) Prototype Class Registered: greyBrick
-INFO: Factory.h(81) Prototype Class Registered: bounceTile
-INFO: Factory.h(81) Prototype Class Registered: Coin
-INFO: Factory.h(81) Prototype Class Registered: Crate
-INFO: Factory.h(81) Prototype Class Registered: Hitbox
-INFO: Factory.h(81) Prototype Class Registered: Coin
-INFO: Factory.h(81) Prototype Class Registered: Crate
-INFO: Factory.h(81) Prototype Class Registered: Hitbox
-INFO: Factory.h(81) Prototype Class Registered: Coin
-INFO: Factory.h(81) Prototype Class Registered: Crate
-INFO: Factory.h(81) Prototype Class Registered: Hitbox
-INFO: Factory.h(81) Prototype Class Registered: Coin
-INFO: Factory.h(81) Prototype Class Registered: Crate
-INFO: Factory.h(81) Prototype Class Registered: Hitbox
-INFO: Factory.h(81) Prototype Class Registered: Coin
-INFO: Factory.h(81) Prototype Class Registered: Crate
-INFO: Factory.h(81) Prototype Class Registered: Hitbox
-INFO: Factory.h(81) Prototype Class Registered: Coin
-INFO: Factory.h(81) Prototype Class Registered: Crate
-INFO: Factory.h(81) Prototype Class Registered: Hitbox
-INFO: Factory.h(81) Prototype Class Registered: topGrass
-INFO: Factory.h(81) Prototype Class Registered: underGrass
-INFO: Factory.h(81) Prototype Class Registered: greyBrick
-INFO: Factory.h(81) Prototype Class Registered: bounceTile
-INFO: Factory.h(81) Prototype Class Registered: Coin
-INFO: Factory.h(81) Prototype Class Registered: Crate
-INFO: Factory.h(81) Prototype Class Registered: Hitbox
-INFO: Factory.h(81) Prototype Class Registered: Coin
-INFO: Factory.h(81) Prototype Class Registered: Crate
-INFO: Factory.h(81) Prototype Class Registered: Hitbox
-INFO: Factory.h(81) Prototype Class Registered: topGrass
-INFO: Factory.h(81) Prototype Class Registered: underGrass
-INFO: Factory.h(81) Prototype Class Registered: greyBrick
-INFO: Factory.h(81) Prototype Class Registered: bounceTile
 INFO: Factory.h(81) Prototype Class Registered: Coin
 INFO: Factory.h(81) Prototype Class Registered: Crate
 INFO: Factory.h(81) Prototype Class Registered: Hitbox

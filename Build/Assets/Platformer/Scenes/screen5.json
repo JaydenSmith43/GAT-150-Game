@@ -2,6 +2,64 @@
 	"actors":[
 		{
 			"type":"Actor",
+			"name":"keyHole",
+			"tag":"KeyHole",
+			"prototype":true,
+			"transform":{
+				"scale": 4
+			},
+			"components":[
+				{
+					"type": "SpriteComponent",
+					"textureName": "textures/keyhole.png",
+					"source": [
+						0,
+						0,
+						16,
+						16
+					]
+				},
+				{
+					"type":"Box2DPhysicsComponent",
+					"isDynamic":false
+				},
+				{
+					"type":"Box2DCollisionComponent",
+					"restitution":0
+				}
+			]
+		},
+		{
+			"type":"Actor",
+			"name":"key",
+			"tag":"Key",
+			"prototype":true,
+			"transform":{
+				"scale": 4
+			},
+			"components":[
+				{
+					"type": "SpriteComponent",
+					"textureName": "textures/key.png",
+					"source": [
+						0,
+						0,
+						16,
+						16
+					]
+				},
+				{
+					"type":"Box2DPhysicsComponent",
+					"isDynamic":false
+				},
+				{
+					"type":"Box2DCollisionComponent",
+					"restitution":0
+				}
+			]
+		},
+		{
+			"type":"Actor",
 			"name":"topGrass",
 			"tag":"Ground",
 			"prototype":true,
@@ -10,9 +68,9 @@
 			},
 			"components":[
 				{
-					"type":"SpriteComponent",
-					"textureName":"textures/tilemap-16.png",
-					"source":[
+					"type": "SpriteComponent",
+					"textureName": "textures/tilemap-16.png",
+					"source": [
 						16,
 						464,
 						16,
@@ -143,7 +201,7 @@
 							0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 							1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 							2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
-							]
+					]
 				}    
 			]
 		}

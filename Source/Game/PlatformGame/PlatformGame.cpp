@@ -24,10 +24,12 @@ bool PlatformGame::Initialize()
 
 	// add events
 	EVENT_SUBSCRIBE("OnAddPoints", PlatformGame::OnAddPoints);
-	EVENT_SUBSCRIBE("OnEnemyDead", PlatformGame::OnEnemyDead);
+	EVENT_SUBSCRIBE("OnEnemyDead", PlatformGame::OnEnemyDead); 
+	EVENT_SUBSCRIBE("OnPlayerHit", PlatformGame::OnPlayerHit);
 
 	kiko::EventManager::Instance().Subscribe("OnAddPoints", this, std::bind(&PlatformGame::OnAddPoints, this, std::placeholders::_1));
 	kiko::EventManager::Instance().Subscribe("OnEnemyDead", this, std::bind(&PlatformGame::OnEnemyDead, this, std::placeholders::_1));
+	kiko::EventManager::Instance().Subscribe("OnPlayerHit", this, std::bind(&PlatformGame::OnPlayerHit, this, std::placeholders::_1));
 
 	return true;
 }
@@ -39,6 +41,16 @@ bool PlatformGame::Shutdown()
 
 void PlatformGame::Update(float dt)
 {
+	//probably not the best way, but stores that player hasKey even when loading different screen/scene
+	if (m_scene->GetActorByName("Player")->tag == "hasKey")
+	{
+		hasKey = true;
+	}
+	if (hasKey = true)
+	{
+		m_scene->GetActorByName("Player")->tag = "hasKey";
+	}
+
 	switch (m_state)
 	{
 	case PlatformGame::eState::Title:
@@ -60,7 +72,6 @@ void PlatformGame::Update(float dt)
 		m_scene->GetActorByName("Player")->transform.position.y = spawnLocationY;
 
 		m_scene->GetActorByName("Bat")->transform.position.x = spawnLocationX;
-		//m_scene->GetActorByName("Bat")->transform.position.y = spawnLocationY;
 
 		loadString = "Scenes/screen" + std::to_string(m_currentScreen) + ".json";
 		m_scene->Load(loadString);
@@ -147,4 +158,9 @@ void PlatformGame::OnEnemyDead(const kiko::Event& event)
 	//m_lives--;
 	//m_state = eState::PlayerDeadStart;
 	kiko::g_audioSystem.PlayOneShot("death");
+}
+
+void PlatformGame::OnPlayerHit(const kiko::Event& event)
+{
+	kiko::g_audioSystem.PlayOneShot("hurt");
 }

@@ -142,6 +142,16 @@
 							"loop": false
 						},
 						{
+							"name": "crouch-attack",
+							"fps": 8,
+							"numColumns": 4,
+							"numRows": 1,
+							"startFrame": 1,
+							"endFrame": 4,
+							"textureName": "textures/gothic-hero-crouch-slash.png",
+							"loop": false
+						},
+						{
 							"name": "attack",
 							"fps": 8,
 							"numColumns": 6,
@@ -282,7 +292,7 @@
 					"type": "TextRenderComponent",
 					"fontName": "fonts/space.TTF",
 					"fontSize": 24,
-					"text": "Health: ",
+					"text": "Health: 100",
 					"color": [ 1, 0, 0, 1 ]
 				}
 			]
