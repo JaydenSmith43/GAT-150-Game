@@ -214,7 +214,6 @@ namespace kiko
 
 		if (other->tag == "Key")
 		{
-			hasKey = true;
 			tag = "hasKey";
 			other->destroyed = true;
 		}

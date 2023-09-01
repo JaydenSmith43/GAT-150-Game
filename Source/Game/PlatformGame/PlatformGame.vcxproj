@@ -136,6 +136,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="..\..\..\Build\Assets\Platformer\Scenes\platformScene.json" />
+    <None Include="..\..\..\Build\Assets\Platformer\Scenes\screen2.json" />
     <None Include="..\..\..\Build\Assets\Platformer\Scenes\screen3.json" />
     <None Include="..\..\..\Build\Assets\Platformer\Scenes\screen4.json" />
     <None Include="..\..\..\Build\Assets\Platformer\Scenes\screen5.json" />

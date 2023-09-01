@@ -36,7 +36,6 @@ namespace kiko
 
 		float jump = 0;
 		float defaultJump = 0;
-		bool hasKey = false;
 		int groundCount = 0;
 		int facing = -1;
 

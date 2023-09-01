@@ -46,7 +46,7 @@ void PlatformGame::Update(float dt)
 	{
 		hasKey = true;
 	}
-	if (hasKey = true)
+	if (hasKey == true)
 	{
 		m_scene->GetActorByName("Player")->tag = "hasKey";
 	}
